@@ -6,12 +6,13 @@ from EnemyUnit import EnemyUnit
 import random
 from pyglet import font
 import json
+import os 
 
 scale = 6
 
 pyglet.resource.path = ['../resources']
 pyglet.resource.reindex()
-font.add_file('../resources/DisposableDroidBB.ttf')
+font.add_file(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../resources/DisposableDroidBB.ttf"))
 ddbb = font.load("DisposableDroid BB")
 
 window = pyglet.window.Window(1152,576)
@@ -35,7 +36,7 @@ def update(dt):
 		if unit.sprite.x > window.width-36*scale:
 			del player_units[player_units.index(unit)]
 			commands['score'] += 1+unit.type
-			print commands['score']
+			print(commands['score'])
 		if unit.health <= 0:
 			recently_killed.append(unit)
 			del player_units[player_units.index(unit)]
@@ -46,7 +47,7 @@ def update(dt):
 		if enemy.sprite.x < 20*scale:
 			del enemy_units[enemy_units.index(enemy)]
 			commands['score'] -= 1+enemy.type
-			print commands['score']
+			print(commands['score'])
 		if enemy.health <= 0:
 			recently_killed.append(enemy)
 			del enemy_units[enemy_units.index(enemy)]
@@ -199,7 +200,7 @@ def on_mouse_press(x,y, button, modifiers):
 
 	if commands['currency'] > commands["currency_increase"]:
 		if upgradeIcon.onclick(mouse_position):
-			print "Upgraded mana"
+			print("Upgraded mana")
 			commands['currency'] -= commands['currency_increase']
 			commands['currency_increase'] *= 2
 			pyglet.clock.unschedule(increase_currency)
@@ -276,7 +277,7 @@ def increase_currency(dt):
 
 
 if __name__ == '__main__':
-	with open("scores.txt", 'r') as jsonFile:
+	with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "scores.txt"), 'r') as jsonFile:
 		leaderboard = json.load(jsonFile)
 	window.push_handlers(on_mouse_press)
 	commands = dict(assigningUnit=False,selectedRow=0, selectedUnit=0, score=10, currency=3, highscore=leaderboard, topscore=1000, saved=False, currency_gap=2, time_gap=1.5, currency_increase=2)

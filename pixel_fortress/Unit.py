@@ -7,16 +7,16 @@ class Unit:
 		y=row+8*scale
 		self.attacksound = attacksound
 		self.type = unitType
-		self.velocity = 0.75
+		self.velocity = 0.4
 		self.anims = character_anims[self.type]
 		self.death_anim = deathanim
 		self.sprite = pyglet.sprite.Sprite(self.anims["walk"], x=scale*24, y=y)
 		self.attackDistance = 10*scale
 		self.health = 100
-		self.damage = 0.5
+		self.damage = 0.1
 		self.target = None
 		if self.type == 0 or self.type == 3:
-			self.velocity = 0.9
+			self.velocity = 0.2
 		if self.type == 1 or self.type==2 or self.type==4:
 			if self.type == 1:
 				self.health-=50
